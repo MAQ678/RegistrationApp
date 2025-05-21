@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace RegistrationApp
 {
     public class Program
@@ -8,6 +10,9 @@ namespace RegistrationApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<Data.AppDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
