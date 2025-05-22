@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RegistrationApp.Services;
 
 namespace RegistrationApp
 {
@@ -13,6 +14,8 @@ namespace RegistrationApp
 
             builder.Services.AddDbContext<Data.AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<IUserService, UserService>();
 
             var app = builder.Build();
 
