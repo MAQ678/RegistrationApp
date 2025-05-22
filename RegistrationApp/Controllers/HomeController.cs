@@ -18,6 +18,23 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpPost]
+    public IActionResult Index(User user)
+    {
+        if(!ModelState.IsValid)
+        {
+            return View(user);
+        }
+
+        TempData["UserName"] = user.UserName;
+        return RedirectToAction("Success");
+    }
+
+    public IActionResult Success()
+    {
+        return View();
+    }
+
     public IActionResult Privacy()
     {
         return View();
