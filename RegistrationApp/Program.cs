@@ -1,4 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using RegistrationApp.Factory;
+using RegistrationApp.Services.EmailServices;
+using RegistrationApp.Services.Users;
 
 namespace RegistrationApp
 {
@@ -13,6 +16,10 @@ namespace RegistrationApp
 
             builder.Services.AddDbContext<Data.AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<LegacyGmailEmailService>()
+                .AddScoped<EmailServiceFactory>()
+                .AddScoped<IUserService, UserService>();
 
             var app = builder.Build();
 
