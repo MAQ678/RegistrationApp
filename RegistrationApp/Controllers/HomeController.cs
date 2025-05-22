@@ -2,8 +2,9 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
+using RegistrationApp.Errors;
 using RegistrationApp.Models;
-using RegistrationApp.Services;
+using RegistrationApp.Services.Users;
 
 namespace RegistrationApp.Controllers;
 
@@ -26,7 +27,7 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> Index(User user)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
             return View(user);
         }
@@ -36,14 +37,15 @@ public class HomeController : Controller
         {
             foreach (var error in result.Errors)
             {
-                if(error.Code == "User.DuplicateEmail")
+                if (error == UserErrors.DuplicateEmail
+                    || error == UserErrors.EmailSendFailed)
                 {
                     ModelState.AddModelError("Email", error.Description);
                 }
                 else
                 {
                     ModelState.AddModelError("", error.Description);
-                }                    
+                }
             }
             return View(user);
         }

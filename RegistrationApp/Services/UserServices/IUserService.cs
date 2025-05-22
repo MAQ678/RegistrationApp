@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
 using RegistrationApp.Models;
 
-namespace RegistrationApp.Services
+namespace RegistrationApp.Services.Users
 {
     public interface IUserService
     {
